@@ -6,9 +6,8 @@ class Kaarten:
         self.kleur=kleur
         self.vorm=vorm
         self.vulling=vulling
-        self.aantal=aantal
-
-
+        self.aantal=2
+        kleur=[]
 
 
 
