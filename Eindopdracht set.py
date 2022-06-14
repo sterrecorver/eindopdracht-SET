@@ -13,6 +13,7 @@ class Kaarten:
         vorm=['diamand','squiggle','oval']
         aantal=['1','2','3']
         
+kaarten.set = pygame.image.load('/Users/sterrecorver/Documents/Kaarten') 
 
 
 
