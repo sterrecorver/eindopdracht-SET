@@ -7,13 +7,21 @@ class Kaarten:
         self.vorm=vorm
         self.vulling=vulling
         self.aantal=aantal
-        
-        kleur=['rood','groen','paars']
-        vulling=['solide', 'gestreept', 'open']
-        vorm=['diamand','squiggle','oval']
+            
+        kleur=['green','purple','red']
+        vorm=['diamond','oval','squiggle']
+        vulling=['empty', 'filled', 'shaded']
         aantal=['1','2','3']
+    
+    
+for kleur in ['green','purple','red']:
+    for vorm in ['diamond','oval','squiggle']:
+        for vulling in ['empty', 'filled', 'shaded']:
+            for aantal in ['1','2','3']:
+                pygame.image.load('/Users/sterrecorver/Documents/Kaarten/'+kleur+vorm+vulling+aantal+'.gif')
         
-kaarten.set = pygame.image.load('/Users/sterrecorver/Documents/Kaarten') 
+        
+        
 
 
 
