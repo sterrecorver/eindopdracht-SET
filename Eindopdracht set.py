@@ -1,4 +1,5 @@
-import pygame
+
+# import pygame
 
 class Kaarten:
     
@@ -6,7 +7,7 @@ class Kaarten:
         self.kleur=kleur
         self.vorm=vorm
         self.vulling=vulling
-        self.aantal=aantal
+        self.aantal=3
 
 
 
