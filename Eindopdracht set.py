@@ -6,8 +6,13 @@ class Kaarten:
         self.kleur=kleur
         self.vorm=vorm
         self.vulling=vulling
-        self.aantal=2
-        kleur=[]
+        self.aantal=aantal
+        
+        kleur=['rood','groen','paars']
+        vulling=['solide', 'gestreept', 'open']
+        vorm=['diamand','squiggle','oval']
+        aantal=['1','2','3']
+        
 
 
 
