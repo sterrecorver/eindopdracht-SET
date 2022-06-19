@@ -8,6 +8,7 @@ class Kaarten:
         self.vulling=vulling
         self.aantal=aantal
         
+<<<<<<< Updated upstream
 
 kleur=['green','purple','red'] #mogelijke kleuren 
 vorm=['diamond','oval','squiggle'] #mogelijke vormen
