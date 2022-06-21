@@ -54,35 +54,50 @@ def sets_in_spel_vinden(stapel): #neemt random 12 kaarten uit de stapel en bekij
     return sets_gevonden
   
 def main(stapel):
+    
     pygame.init()
     scherm=pygame.display.set_mode((800,600)) #schermopmaak
     pygame.display.set_caption("SETS")
-    menu=True
+    menu = True
+    
     while menu:
-        muis=pygame.mouse.get_pos()
+        muis = pygame.mouse.get_pos()
+        #print(muis)
+        scherm.fill((0, 255, 180))
+        pygame.draw.rect(scherm, (255 , 255 , 255), [270, 40, 255, 90])
+        font = pygame.font.SysFont('Arial', 25)
+        scherm.blit(font.render('Get started!' , True, (255, 0 , 0 )), (350,70))
+        pygame.display.update()
+        
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
-                menu=False
-        scherm.fill((255, 255, 255))
-        start_knop=pygame.font.SysFont("arial",30).render("Start game", True, (255,105,180))
-        start_knop_rect=start_knop.get_rect()
-        start_knop_rect.center=((400,300))
-        pygame.display.update()
+                pygame.quit()
+                quit()
+                
         for event in pygame.event.get():
-            if event.type==pygame.MOUSEBUTTONDOWN:
-                if 340 <= muis[0] <= 460 and 270 <= muis[1] <= 330:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if 525 > muis[0] > 270 and 125 > muis[1] > 40:
                     menu=False
                     spel=True
-    
-    while spel:
+                    pygame.display.update()
         
-        # for event in pygame.event.get():
-        #     kaarten_gebruikt=[]    
-        #     for i in range(13):
-        #         kaarten_in_veld=random.choice(stapel)
-        #         kaarten_gebruikt.append(kaarten_in_veld)
-        #         kaarten_in_veld = pygame.image.load('kaarten/'+kleur+vorm+vulling+aantal+'.gif')
-        #         kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (50,30))
+        
+    # spel = True
+    # while spel:
+    #     scherm.fill((0,0,0))
+        
+    #     for event in pygame.event.get():
+    #         if event.type==pygame.QUIT:
+    #             pygame.quit()
+    #             quit()
+                
+    #     for event in pygame.event.get():
+    #         kaarten_gebruikt=[]    
+    #         for i in range(13):
+    #             kaarten_in_veld=random.choice(stapel)
+    #             kaarten_gebruikt.append(kaarten_in_veld)
+    #             kaarten_in_veld = pygame.image.load('kaarten/'+kleur+vorm+vulling+aantal+'.gif')
+    #             kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (50,30))
                 
                 
                 #twaalf random kaarten uit deck geplaatst op het scherm 
