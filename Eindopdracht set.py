@@ -43,36 +43,54 @@ def set_of_niet(kaart_1,kaart_2,kaart_3): #controle of 3 kaarten een set vormen
 
 def sets_in_spel_vinden(stapel): #neemt random 12 kaarten uit de stapel en bekijkt of er een set is tussen 3 kaarten
     sets_gevonden=[]            
-    for i,ki in random.sample(stapel,12):
-        for j,kj in random.sample(stapel[i+1:],12):
-            for r,kr in random.sample(stapel[j+1:],12):
+    for i,ki in enumerate(random.sample(stapel,12)):
+        for j,kj in enumerate(random.sample(stapel[i+1:],12),i+1):
+            for r,kr in enumerate(random.sample(stapel[j+1:],12),j+1):
                 if set_of_niet(ki, kj, kr):
-                    sets_gevonden.append((i,j,r)) #zoja, dan voegen we die toe aan een lijst met 
+                    sets_gevonden.append((i,j,r))
+                    if len(sets_gevonden)==1:
+                        continue #zoja, dan voegen we die toe aan een lijst met 
                                                   #mogelijkheden voor sets onder de 12 kaarten   
     return sets_gevonden
-
-
-    
+  
 def main(stapel):
     pygame.init()
-    
-    
+    scherm=pygame.display.set_mode((800,600)) #schermopmaak
+    pygame.display.set_caption("SETS")
     menu=True
     while menu:
-        scherm=pygame.display.set_mode((800,600)) #schermopmaak
         muis=pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                menu=False
         scherm.fill((255, 255, 255))
-        pygame.display.set_caption("SETS")
-        #pygame print een startrechthoek, als in de buurt geklikt, dan starten spel
         start_knop=pygame.font.SysFont("arial",30).render("Start game", True, (255,105,180))
         start_knop_rect=start_knop.get_rect()
-        start_knop_rect.center=(400,300)
+        start_knop_rect.center=((400,300))
+        pygame.display.update()
         for event in pygame.event.get():
             if event.type==pygame.MOUSEBUTTONDOWN:
                 if 340 <= muis[0] <= 460 and 270 <= muis[1] <= 330:
                     menu=False
                     spel=True
-    pygame.quit()
+    
+    while spel:
+        
+        # for event in pygame.event.get():
+        #     kaarten_gebruikt=[]    
+        #     for i in range(13):
+        #         kaarten_in_veld=random.choice(stapel)
+        #         kaarten_gebruikt.append(kaarten_in_veld)
+        #         kaarten_in_veld = pygame.image.load('kaarten/'+kleur+vorm+vulling+aantal+'.gif')
+        #         kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (50,30))
+                
+                
+                #twaalf random kaarten uit deck geplaatst op het scherm 
+        #timer, als tijd voorbij, dan computer set vinden of indien geen set, 3 kaarten weg en drie nieuwe erbij. 
+        #score
+        #stop knop
+        
+        pygame.quit()
 main(stapel)
 
     
