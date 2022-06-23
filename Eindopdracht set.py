@@ -55,30 +55,30 @@ def sets_in_spel_vinden(stapel): #neemt random 12 kaarten uit de stapel en bekij
                                                   #mogelijkheden voor sets onder de 12 kaarten   
     return sets_gevonden
   
-def main(stapel):
+def main(geschudde_stapel):
     
     pygame.init()
-    scherm=pygame.display.set_mode((800,600)) #schermopmaak
-    pygame.display.set_caption("SETS")
     menu = True
     
     while menu:
-        muis = pygame.mouse.get_pos()
+        #x,y = pygame.mouse.get_pos()
         #print(muis)
+        
+        scherm=pygame.display.set_mode((800,600)) #schermopmaak
+        pygame.display.set_caption("SETS")
+        font = pygame.font.SysFont('Arial', 25)
         scherm.fill((0, 255, 180))
         pygame.draw.rect(scherm, (255 , 255 , 255), [270, 40, 255, 90])
-        font = pygame.font.SysFont('Arial', 25)
         scherm.blit(font.render('Get started!' , True, (255, 0 , 0 )), (350,70))
         pygame.display.update()
         
         for event in pygame.event.get():
+            x,y=pygame.mouse.get_pos()
             if event.type==pygame.QUIT:
                 pygame.quit()
                 quit()
-                
-        for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if 525 > muis[0] > 270 and 125 > muis[1] > 40:
+                if 525 > x > 270 and 125 > y > 40:
                     menu=False
                     spel=True
                     pygame.display.update()
@@ -107,7 +107,7 @@ def main(stapel):
         #score
         #stop knop
         
-        pygame.quit()
+    pygame.quit()
 main(stapel)
 
     
