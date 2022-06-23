@@ -2,6 +2,7 @@ import pygame
 import random
 import timer
 import time
+from random import sample
 
 class Kaarten:
     def __init__(self,kleur,vorm,vulling,aantal): #eigenschappen aan kaarten toekennen
@@ -25,7 +26,8 @@ for kleur in ['green','purple','red']:
                 kaarten_toevoegen = Kaarten(kleur, vorm, vulling, aantal)
                 stapel.append(kaarten_toevoegen)
                 pygame.image.load('kaarten/'+kleur+vorm+vulling+aantal+'.gif')     
-        
+                geschudde_stapel=random.shuffle(stapel)
+            
 def gelijk_of_ongelijk(k1,k2,k3): #kijken wanneer 3 gelijk zijn of juist niet
     if k1 == k2 and k2 == k3:
         return True
@@ -43,9 +45,9 @@ def set_of_niet(kaart_1,kaart_2,kaart_3): #controle of 3 kaarten een set vormen
 
 def sets_in_spel_vinden(stapel): #neemt random 12 kaarten uit de stapel en bekijkt of er een set is tussen 3 kaarten
     sets_gevonden=[]            
-    for i,ki in enumerate(random.sample(stapel,12)):
-        for j,kj in enumerate(random.sample(stapel[i+1:],12),i+1):
-            for r,kr in enumerate(random.sample(stapel[j+1:],12),j+1):
+    for i,ki in enumerate(sample(geschudde_stapel,12)):
+        for j,kj in enumerate(sample(geschudde_stapel[i+1:],12),i+1):
+            for r,kr in enumerate(sample(geschudde_stapel[j+1:],12),j+1):
                 if set_of_niet(ki, kj, kr):
                     sets_gevonden.append((i,j,r))
                     if len(sets_gevonden)==1:
