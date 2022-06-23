@@ -130,7 +130,7 @@ def main(stapel):
                 
                 #if event.type == pygame.K_RETURN:
                     
-                zif event.key == pygame.K_BACKSPACE and len(lst) > 0:
+                if event.key == pygame.K_BACKSPACE and len(lst) > 0:
                 
                     lst.pop()
                 else:
