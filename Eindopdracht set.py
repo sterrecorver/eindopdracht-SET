@@ -26,7 +26,7 @@ for kleur in ['green','purple','red']:
                 kaarten_toevoegen = Kaarten(kleur, vorm, vulling, aantal)
                 stapel.append(kaarten_toevoegen)
                 pygame.image.load('kaarten/'+kleur+vorm+vulling+aantal+'.gif')     
-                geschudde_stapel=random.shuffle(stapel)
+                
             
 def gelijk_of_ongelijk(k1,k2,k3): #kijken wanneer 3 gelijk zijn of juist niet
     if k1 == k2 and k2 == k3:
@@ -43,19 +43,20 @@ def set_of_niet(kaart_1,kaart_2,kaart_3): #controle of 3 kaarten een set vormen
     controle_aantal = gelijk_of_ongelijk(kaart_1.aantal, kaart_2.aantal, kaart_3.aantal)
     return controle_kleur and controle_vorm and controle_vulling and controle_aantal
 
-def sets_in_spel_vinden(stapel): #neemt random 12 kaarten uit de stapel en bekijkt of er een set is tussen 3 kaarten
+def sets_in_spel_vinden(kaarten_gebruikt): #neemt random 12 kaarten uit de stapel en bekijkt of er een set is tussen 3 kaarten
     sets_gevonden=[]            
-    for i,ki in enumerate(sample(geschudde_stapel,12)):
-        for j,kj in enumerate(sample(geschudde_stapel[i+1:],12),i+1):
-            for r,kr in enumerate(sample(geschudde_stapel[j+1:],12),j+1):
-                if set_of_niet(ki, kj, kr):
-                    sets_gevonden.append((i,j,r))
-                    if len(sets_gevonden)==1:
-                        continue #zoja, dan voegen we die toe aan een lijst met 
+    for i in kaarten_gebruikt:
+        for j in kaarten_gebruikt:
+            for r in kaarten_gebruikt:
+                if i != j and j != r and r != i:
+                    if set_of_niet(i, j, r):
+                        sets_gevonden.append([i,j,r])
+                        # if len(sets_gevonden)==1:
+                        #    continue #zoja, dan voegen we die toe aan een lijst met 
                                                   #mogelijkheden voor sets onder de 12 kaarten   
     return sets_gevonden
   
-def main(geschudde_stapel):
+def main(stapel):
     
     pygame.init()
     menu = True
@@ -83,24 +84,61 @@ def main(geschudde_stapel):
                     spel=True
                     pygame.display.update()
         
+    #pygame.display.flip()
+    scherm.fill((0,0,0))
+    pygame.draw.rect(scherm, (255 , 255 , 255), [220, 540, 400, 60])
+    kaarten_gebruikt=[]
+    
+    for i in range(4):
+        kaarten_in_veld = random.choice(stapel)
+        kaarten_gebruikt.append(kaarten_in_veld)
+        stapel.remove(kaarten_in_veld)
+        kaarten_in_veld = pygame.image.load('kaarten/'+kaarten_in_veld.kleur+kaarten_in_veld.vorm+kaarten_in_veld.vulling+kaarten_in_veld.aantal+'.gif')
+        kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (100,80))
+        scherm.blit(kaarten_in_veld, (100 + 130 * i,100 ))
         
-    # spel = True
-    # while spel:
-    #     scherm.fill((0,0,0))
+    
+    for i in range(4):
+        kaarten_in_veld=random.choice(stapel)
+        kaarten_gebruikt.append(kaarten_in_veld)
+        stapel.remove(kaarten_in_veld)
+        kaarten_in_veld = pygame.image.load('kaarten/'+kaarten_in_veld.kleur+kaarten_in_veld.vorm+kaarten_in_veld.vulling+kaarten_in_veld.aantal+'.gif')
+        kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (100,80))
+        scherm.blit(kaarten_in_veld, (100 + 130 * i,220 ))
+       
+    
+    for i in range(4):
+        kaarten_in_veld=random.choice(stapel)
+        kaarten_gebruikt.append(kaarten_in_veld)
+        stapel.remove(kaarten_in_veld)
+        kaarten_in_veld = pygame.image.load('kaarten/'+kaarten_in_veld.kleur+kaarten_in_veld.vorm+kaarten_in_veld.vulling+kaarten_in_veld.aantal+'.gif')
+        kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (100,80))
+        scherm.blit(kaarten_in_veld, (100 + 130 * i,340 ))
+    print(sets_in_spel_vinden(kaarten_gebruikt))
+    lst = []    
+    while spel:
+        pygame.display.flip()
         
-    #     for event in pygame.event.get():
-    #         if event.type==pygame.QUIT:
-    #             pygame.quit()
-    #             quit()
+        
+     
                 
-    #     for event in pygame.event.get():
-    #         kaarten_gebruikt=[]    
-    #         for i in range(13):
-    #             kaarten_in_veld=random.choice(stapel)
-    #             kaarten_gebruikt.append(kaarten_in_veld)
-    #             kaarten_in_veld = pygame.image.load('kaarten/'+kleur+vorm+vulling+aantal+'.gif')
-    #             kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (50,30))
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                spel = False
+            if event.type == pygame.KEYDOWN:
                 
+                #if event.type == pygame.K_RETURN:
+                    
+                zif event.key == pygame.K_BACKSPACE and len(lst) > 0:
+                
+                    lst.pop()
+                else:
+                    letter = event.unicode
+                    lst.append(letter)
+                pygame.draw.rect(scherm, (255 , 255 , 255), [220, 540, 400, 60])
+                scherm.blit(font.render(''.join(lst) , True, (255, 0 , 0 )), (320,550))
+                pygame.display.update()
                 
                 #twaalf random kaarten uit deck geplaatst op het scherm 
         #timer, als tijd voorbij, dan computer set vinden of indien geen set, 3 kaarten weg en drie nieuwe erbij. 
