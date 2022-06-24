@@ -43,7 +43,7 @@ def set_of_niet(kaart_1,kaart_2,kaart_3): #controle of 3 kaarten een set vormen
     controle_aantal = gelijk_of_ongelijk(kaart_1.aantal, kaart_2.aantal, kaart_3.aantal)
     return controle_kleur and controle_vorm and controle_vulling and controle_aantal
 
-def sets_in_spel_vinden(kaarten_gebruikt): #neemt random 12 kaarten uit de stapel en bekijkt of er een set is tussen 3 kaarten
+def sets_in_spel_vinden(kaarten_gebruikt): #bekijkt voor de 12 kaarten op het scherm of er een set is tussen 3 kaarten
     sets_gevonden=[]            
     for i in kaarten_gebruikt:
         for j in kaarten_gebruikt:
@@ -51,9 +51,7 @@ def sets_in_spel_vinden(kaarten_gebruikt): #neemt random 12 kaarten uit de stape
                 if i != j and j != r and r != i:
                     if set_of_niet(i, j, r):
                         sets_gevonden.append([i,j,r])
-                        # if len(sets_gevonden)==1:
-                        #    continue #zoja, dan voegen we die toe aan een lijst met 
-                                                  #mogelijkheden voor sets onder de 12 kaarten   
+                        
     return sets_gevonden
   
 def main(stapel):
@@ -84,7 +82,6 @@ def main(stapel):
                     spel=True
                     pygame.display.update()
         
-    #pygame.display.flip()
     scherm.fill((69,139,0))
     pygame.draw.rect(scherm, (255 , 255 , 255), [220, 540, 400, 60])
     kaarten_gebruikt=[]
@@ -126,10 +123,6 @@ def main(stapel):
     while spel:
         
         pygame.display.flip()
-        
-        
-     
-                
         for event in pygame.event.get():
             
             if event.type==pygame.QUIT:
@@ -221,13 +214,3 @@ def main(stapel):
 main(stapel)
 
     
-     #stap voor stap bedenken wat erin moet en op welke volgorde dat moet gebeuren   
-    
-    
-    
-
-#Ideën voor het spel: Startscherm met optie knop starten en banner spel. 
-                     #Spel start met 12 kaarten op het scherm. Opties voor kaarten aanvullen, timer en stopknop
-                     #Spel geeft terug of het aangeklikte een set is of niet. Dus kaarten moeten aangekklikt kunnen worden. 
-                     #Indien set, haal kaarten uit veld en voeg random 3 nieuwe toe.
-                     #Indien geen sets in het veld, voeg 3 extra kaarten toe aan het veld.
