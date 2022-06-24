@@ -1,8 +1,5 @@
 import pygame
 import random
-import timer
-import time
-from random import sample
 
 class Kaarten:
     def __init__(self,kleur,vorm,vulling,aantal): #eigenschappen aan kaarten toekennen
@@ -15,9 +12,9 @@ class Kaarten:
 kleur=['green','purple','red'] #mogelijke kleuren 
 vorm=['diamond','oval','squiggle'] #mogelijke vormen
 vulling=['empty', 'filled', 'shaded'] #mogelijke vorminkleuring
-aantal=['1','2','3']
+aantal=['1','2','3'] #mogelijk aantal
     
-#kunnen we er iet beter een definitie van maken, zodat het de stapel teruggeefd?- vraag Lois
+
 stapel = [] #het aanmaken van een stapel kaarten, met alle mogelijke combinaties van eigenschappen
 for kleur in ['green','purple','red']:
     for vorm in ['diamond','oval','squiggle']:
@@ -50,8 +47,7 @@ def sets_in_spel_vinden(kaarten_gebruikt): #bekijkt voor de 12 kaarten op het sc
             for r in kaarten_gebruikt:
                 if i != j and j != r and r != i:
                     if set_of_niet(i, j, r):
-                        sets_gevonden.append([i,j,r])
-                        
+                        sets_gevonden.append([i,j,r])               
     return sets_gevonden
   
 def main(stapel):
@@ -60,10 +56,8 @@ def main(stapel):
     menu = True
     
     while menu:
-        #x,y = pygame.mouse.get_pos()
-        #print(muis)
         
-        scherm=pygame.display.set_mode((800,600)) #schermopmaak
+        scherm=pygame.display.set_mode((800,600)) #schermopmaak instellen
         pygame.display.set_caption("SETS")
         font = pygame.font.SysFont('Arial', 25)
         scherm.fill((0, 255, 180))
@@ -86,7 +80,7 @@ def main(stapel):
     pygame.draw.rect(scherm, (255 , 255 , 255), [220, 540, 400, 60])
     kaarten_gebruikt=[]
     
-    for i in range(4):
+    for i in range(4): #het toevoegen van 4 random kaartel  uit de  stapel aan de eerste rij
         kaarten_in_veld = random.choice(stapel)
         kaarten_gebruikt.append(kaarten_in_veld)
         stapel.remove(kaarten_in_veld)
@@ -95,7 +89,7 @@ def main(stapel):
         scherm.blit(kaarten_in_veld, (130 + 140 * i,100 ))
         
     
-    for i in range(4):
+    for i in range(4): #het toevoegen van 4 random kaartel  uit de  stapel aan de tweede rij
         kaarten_in_veld=random.choice(stapel)
         kaarten_gebruikt.append(kaarten_in_veld)
         stapel.remove(kaarten_in_veld)
@@ -104,7 +98,7 @@ def main(stapel):
         scherm.blit(kaarten_in_veld, (130 + 140 * i,220 ))
        
     
-    for i in range(4):
+    for i in range(4): #het toevoegen van 4 random kaartel  uit de  stapel aan de derde rij
         kaarten_in_veld=random.choice(stapel)
         kaarten_gebruikt.append(kaarten_in_veld)
         stapel.remove(kaarten_in_veld)
@@ -172,13 +166,18 @@ def main(stapel):
                     #hier wordt gecontroleerd of de poging juist is vergeleken met de gevonden sets met de computer
                     if len(sets_in_spel_vinden(kaarten_gebruikt)) > 0 :
                         for i in range(len(sets_in_spel_vinden(kaarten_gebruikt))):
-                            if poging == sets_in_spel_vinden(kaarten_gebruikt)[i]:
+                            if poging == sets_in_spel_vinden(kaarten_gebruikt)[i]: #resultata bij invullen van een goede set
                                 scherm.fill((255,200,0))    #geeft een leuke pop-up aangezien we niet verder kwamen na 1 gevonden set
                                 pygame.draw.rect(scherm, (255 , 255 , 255), [270, 40, 255, 90])
-                                scherm.blit(font.render('Yeahhhhh Set' , True, (255, 200 , 0 )), (350,70))
+                                scherm.blit(font.render('Je hebt SET!' , True, (255, 200 , 0 )), (350,70))
                                 pygame.display.flip()
-                    # als er geen set is gevonden door de computer stopt het spel en ben je game over, variant omdat we niet verder kwamen            
-                    else: 
+                            else: #resultaat  van het invullen van een onjuiste  set
+                                scherm.fill((0,0,0))    #geeft een leuke pop-up aangezien we niet verder kwamen na 1 gevonden set
+                                pygame.draw.rect(scherm, (255 , 255 , 255), [270, 40, 255, 90])
+                                scherm.blit(font.render('Game over' , True, (255, 200 , 0 )), (350,70))
+                                pygame.display.flip()      
+                           
+                    else: # als er geen set is gevonden door de computer stopt het spel en ben je game over, variant omdat we niet verder kwamen 
                         scherm.fill((255, 0 ,0))
                         pygame.draw.rect(scherm, (255 , 255 , 255), [270, 40, 255, 90])
                         scherm.blit(font.render('Game over' , True, (255, 0 , 0 )), (350,70))
@@ -198,19 +197,8 @@ def main(stapel):
                 pygame.draw.rect(scherm, (255 , 255 , 255), [220, 540, 400, 60])
                 scherm.blit(font.render(''.join(lst) , True, (255, 0 , 0 )), (320,550))
                 pygame.display.update()
-                
-                #twaalf random kaarten uit deck geplaatst op het scherm 
-        #timer, als tijd voorbij, dan computer set vinden of indien geen set, 3 kaarten weg en drie nieuwe erbij. 
-        #score
-        #stop knop
         
     pygame.quit()
-    #onze trotse hulp voor debuggen
-    # print(lst)
-    # print(lst_1)
-    # print(input_1)
-    # print(input_2)
-    # print(input_3)
 main(stapel)
 
     
