@@ -85,7 +85,7 @@ def main(stapel):
                     pygame.display.update()
         
     #pygame.display.flip()
-    scherm.fill((0,0,0))
+    scherm.fill((69,139,0))
     pygame.draw.rect(scherm, (255 , 255 , 255), [220, 540, 400, 60])
     kaarten_gebruikt=[]
     
@@ -94,8 +94,8 @@ def main(stapel):
         kaarten_gebruikt.append(kaarten_in_veld)
         stapel.remove(kaarten_in_veld)
         kaarten_in_veld = pygame.image.load('kaarten/'+kaarten_in_veld.kleur+kaarten_in_veld.vorm+kaarten_in_veld.vulling+kaarten_in_veld.aantal+'.gif')
-        kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (100,80))
-        scherm.blit(kaarten_in_veld, (100 + 130 * i,100 ))
+        kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (120,100))
+        scherm.blit(kaarten_in_veld, (130 + 140 * i,100 ))
         
     
     for i in range(4):
@@ -103,8 +103,8 @@ def main(stapel):
         kaarten_gebruikt.append(kaarten_in_veld)
         stapel.remove(kaarten_in_veld)
         kaarten_in_veld = pygame.image.load('kaarten/'+kaarten_in_veld.kleur+kaarten_in_veld.vorm+kaarten_in_veld.vulling+kaarten_in_veld.aantal+'.gif')
-        kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (100,80))
-        scherm.blit(kaarten_in_veld, (100 + 130 * i,220 ))
+        kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (120,100))
+        scherm.blit(kaarten_in_veld, (130 + 140 * i,220 ))
        
     
     for i in range(4):
@@ -112,30 +112,96 @@ def main(stapel):
         kaarten_gebruikt.append(kaarten_in_veld)
         stapel.remove(kaarten_in_veld)
         kaarten_in_veld = pygame.image.load('kaarten/'+kaarten_in_veld.kleur+kaarten_in_veld.vorm+kaarten_in_veld.vulling+kaarten_in_veld.aantal+'.gif')
-        kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (100,80))
-        scherm.blit(kaarten_in_veld, (100 + 130 * i,340 ))
+        kaarten_in_veld = pygame.transform.scale(kaarten_in_veld, (120,100))
+        scherm.blit(kaarten_in_veld, (130 + 140 * i,340 ))
+        
     print(sets_in_spel_vinden(kaarten_gebruikt))
-    lst = []    
+    for i in range(len(sets_in_spel_vinden(kaarten_gebruikt))):
+        print(sets_in_spel_vinden(kaarten_gebruikt)[i])
+    print(len(sets_in_spel_vinden(kaarten_gebruikt)))
+    lst = []
+    lst_1 = []
+    
+    
     while spel:
+        
         pygame.display.flip()
         
         
      
                 
         for event in pygame.event.get():
+            
             if event.type==pygame.QUIT:
                 pygame.quit()
                 spel = False
             if event.type == pygame.KEYDOWN:
-                
-                #if event.type == pygame.K_RETURN:
-                    
-                if event.key == pygame.K_BACKSPACE and len(lst) > 0:
-                
+                #geeft aan wat er moet gebeuren als er enter wordt gedrukt op het toetsenbord
+                if event.key == pygame.K_RETURN:
+                    for i in lst:
+                        if len(lst_1) < len(lst) - 2:
+                            lst_1.extend(i.split())
+                            #in deze waslijst aan if statements wordt er gekeken naar van welke vorm de input is en daardoor wordt er de juiste cijfers bij gekozen
+                    if len(lst_1) == 6:
+                        input_1 = int(''.join(lst_1[0:2]))
+                        input_2 = int(''.join(lst_1[2:4]))
+                        input_3 = int(''.join(lst_1[4:6]))
+                    elif len(lst_1) == 5 and lst[1] == ' ':
+                        input_1 = int(''.join(lst_1[0:1]))
+                        input_2 = int(''.join(lst_1[1:3]))
+                        input_3 = int(''.join(lst_1[3:5]))
+                    elif len(lst_1) == 5 and lst[4] == ' ':
+                        input_1 = int(''.join(lst_1[0:2]))
+                        input_2 = int(''.join(lst_1[2:3]))
+                        input_3 = int(''.join(lst_1[3:5]))
+                    elif len(lst_1) == 5 and lst[5] == ' ':
+                        input_1 = int(''.join(lst_1[0:2]))
+                        input_2 = int(''.join(lst_1[2:4]))
+                        input_3 = int(''.join(lst_1[4:5]))
+                    elif len(lst_1) == 4 and lst[2] == ' ':
+                        input_1 = int(''.join(lst_1[0:2]))
+                        input_2 = int(''.join(lst_1[2]))
+                        input_3 = int(''.join(lst_1[3]))
+                    elif len(lst_1) == 4 and lst[1] == ' ' and lst[4] == ' ':
+                        input_1 = int(''.join(lst_1[0]))
+                        input_2 = int(''.join(lst_1[1:3]))
+                        input_3 = int(''.join(lst_1[3]))
+                    elif len(lst_1) == 4 and lst[3] == ' ':
+                        input_1 = int(''.join(lst_1[0]))
+                        input_2 = int(''.join(lst_1[1]))
+                        input_3 = int(''.join(lst_1[2:4]))
+                    else:
+                        input_1 = int(''.join(lst_1[0]))
+                        input_2 = int(''.join(lst_1[1]))
+                        input_3 = int(''.join(lst_1[2]))
+                    #deze variabele poging geeft een lijst die van dezelfde vorm is van de gevonden sets door de computer    
+                    poging = [ kaarten_gebruikt[input_1-1] , kaarten_gebruikt[input_2-1] , kaarten_gebruikt[input_3-1]]
+                    #hier wordt gecontroleerd of de poging juist is vergeleken met de gevonden sets met de computer
+                    if len(sets_in_spel_vinden(kaarten_gebruikt)) > 0 :
+                        for i in range(len(sets_in_spel_vinden(kaarten_gebruikt))):
+                            if poging == sets_in_spel_vinden(kaarten_gebruikt)[i]:
+                                scherm.fill((255,200,0))    #geeft een leuke pop-up aangezien we niet verder kwamen na 1 gevonden set
+                                pygame.draw.rect(scherm, (255 , 255 , 255), [270, 40, 255, 90])
+                                scherm.blit(font.render('Yeahhhhh Set' , True, (255, 200 , 0 )), (350,70))
+                                pygame.display.flip()
+                    # als er geen set is gevonden door de computer stopt het spel en ben je game over, variant omdat we niet verder kwamen            
+                    else: 
+                        scherm.fill((255, 0 ,0))
+                        pygame.draw.rect(scherm, (255 , 255 , 255), [270, 40, 255, 90])
+                        scherm.blit(font.render('Game over' , True, (255, 0 , 0 )), (350,70))
+                        pygame.display.flip()
+                            
+                # zorgt ervoor dat je getypte dingen kan verwijderen       
+                elif event.key == pygame.K_BACKSPACE and len(lst) > 0:
                     lst.pop()
+                    
                 else:
                     letter = event.unicode
-                    lst.append(letter)
+                    if letter.isdigit() ==  True or letter == ' ':
+                        if len(lst) < 9:
+                            lst.append(letter)
+                        else: 
+                            None
                 pygame.draw.rect(scherm, (255 , 255 , 255), [220, 540, 400, 60])
                 scherm.blit(font.render(''.join(lst) , True, (255, 0 , 0 )), (320,550))
                 pygame.display.update()
@@ -146,6 +212,12 @@ def main(stapel):
         #stop knop
         
     pygame.quit()
+    #onze trotse hulp voor debuggen
+    # print(lst)
+    # print(lst_1)
+    # print(input_1)
+    # print(input_2)
+    # print(input_3)
 main(stapel)
 
     
